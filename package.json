@@ -1,0 +1,58 @@
+{
+  "name": "@bbva/login-counter",
+  "version": "0.0.0-SNAPSHOT",
+  "description": "",
+  "author": "Francisco Gañete Cabezas",
+  "license": "",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "LICENSE",
+    "package.json",
+    "README.md",
+    "dist/*.d.ts",
+    "dist/*.js",
+    "dist/*.js.map",
+    "dist/src/**/*.d.ts",
+    "dist/src/**/*.js",
+    "dist/src/**/*.js.map",
+    "!dist/stories/",
+    "!dist/test/"
+  ],
+  "scripts": {
+    "start": "concurrently --kill-others --names tsc,web-dev-server \"npm run tsc:watch\" \"web-dev-server --app-index demo/index.html --node-resolve --open --watch\"",
+    "tsc:watch": "tsc --watch",
+    "storybook": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds -c .storybook/server.mjs\"",
+    "storybook:build": "tsc && build-storybook",
+    "init": "npm run init:scaffolding && npm run init:monorepo",
+    "init:scaffolding": "cd scaffolding/generator && npm i && cd ../../",
+    "init:monorepo": "node sas-cli update && npm install",
+    "build": "npm run version && npm run init && npm run build:monorepo",
+    "build:monorepo": "npm i && tsc",
+    "build:monorepodebug": "npm i --loglevel verbose && node sas-cli list && tsc --traceResolution",
+    "test": "tsc && wtr --coverage",
+    "lint": "eslint . --ext .ts",
+    "version": "node -v && npm -v",
+    "update:version": "node sas-cli update-version \"$npm_config_newversion\"",
+    "publish": "npm publish --workspaces --access public",
+    "publish:local": "npm run build && node sas-cli publish-local \"$npm_config_registry\""
+  },
+  "devDependencies": {
+    "@open-wc/testing": "^2.5.33",
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
+    "@typescript-eslint/parser": "^4.28.3",
+    "@web/dev-server": "^0.1.10",
+    "@web/dev-server-storybook": "^0.3.5",
+    "@web/test-runner": "^0.13.5",
+    "@web/test-runner-puppeteer": "^0.10.0",
+    "concurrently": "^5.3.0",
+    "eslint": "^7.31.0",
+    "eslint-plugin-no-loops": "^0.3.0",
+    "tslib": "^2.1.0",
+    "typescript": "^4.2.3"
+  },
+  "private": true,
+  "workspaces": [
+    "packages/**"
+  ]
+}

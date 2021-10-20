@@ -1,0 +1,48 @@
+{
+  "name": "@bbva/wc-login-form",
+  "version": "0.0.0-SNAPSHOT",
+  "description": "wc-login-form",
+  "author": "Francisco Gañete Cabezas",
+  "license": "",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "LICENSE",
+    "package.json",
+    "README.md",
+    "dist/*.d.ts",
+    "dist/*.js",
+    "dist/*.js.map",
+    "dist/src/**/*.d.ts",
+    "dist/src/**/*.js",
+    "dist/src/**/*.js.map",
+    "!dist/stories/",
+    "!dist/test/"
+  ],
+  "types": "dist/**/**.d.ts",
+  "scripts": {
+    "start": "concurrently --kill-others --names tsc,web-dev-server \"npm run tsc:watch\" \"web-dev-server --app-index demo/index.html --node-resolve --open --watch\"",
+    "tsc:watch": "tsc --watch",
+    "prepublish": "tsc",
+    "storybook": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds -c .storybook/server.mjs\"",
+    "storybook:build": "tsc && build-storybook"
+  },
+  "dependencies": {
+    "@material/mwc-button": "^0.20.0",
+    "@material/mwc-textfield": "^0.20.0",
+    "@material/mwc-icon": "^0.20.0",
+    "@material/mwc-icon-button": "^0.20.0",
+    "@material/mwc-icon-button-toggle": "^0.20.0",
+    "@material/mwc-list": "^0.20.0",
+    "@material/mwc-menu": "^0.20.0",
+    "lit-element": "^2.4.0",
+    "lit-html": "^1.3.0"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.1.8",
+    "@web/dev-server-storybook": "^0.3.5",
+    "concurrently": "^5.3.0",
+    "tslib": "^2.1.0",
+    "typescript": "^4.1.5"
+  }
+}
